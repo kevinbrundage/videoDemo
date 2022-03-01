@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Video Demo</title>
+	<style>
+		.videoContainer {
+			display: inline-block;
+			position: relative;
+		}
+		.overlayHeading {
+			font-size: 16px;
+			border-bottom: 1px dotted navy
+		}
+		.overlayBody {
+			font-size: 12px;
+		}
+		.videoOverlay {
+			position: absolute;
+			width: 250px;
+			margin: 10px;
+			padding: 5px 5px;
+			font-family: Helvetica;
+			color: #FFF;
+			background-color: #B2B5B5;
+			border: 2px solid navy;
+			display: none;
+		}
+		#northAmericaHeading {
+			left: 250px;
+			top: 50px;
+		}
+		#southAmericaHeading {
+			left: 300px;
+			top: 150px;
+		}
+		#africaHeading {
+			left: 300px;
+			top: 125px;
+		}
+		video {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.metadataContainer {
+			display: inline-block;
+			margin-top: 10px;
+			width: 480px;
+			border: 2px solid black;
+		}
+		.metadataHeading {
+			font-size: 16px;
+			margin: 10px;
+		}
+		.metadataBody {
+			font-size: 12px;
+		}
+
+	</style>
+</head>
+
+<body id="pageBody">
+	<div class="videoContainer">
+		<div class="videoOverlay" id="africaHeading">
+			<div class="overlayHeading">Africa</div>
+			<div class="overlayBody">
+				<ol>
+					<li>First fact about Africa</li>
+					<li>Next fact about Africa</li>
+				</ol>
+			</div>
+		</div>
+		<div class="videoOverlay" id="southAmericaHeading">
+			<div class="overlayHeading">South America</div>
+			<div class="overlayBody">
+				<ol>
+					<li>First fact about South America</li>
+					<li>Next fact about South America</li>
+				</ol>
+			</div>
+		</div>
+		<div class="videoOverlay" id="northAmericaHeading">
+			<div class="overlayHeading">North America</div>
+			<div class="overlayBody">
+				<ol>
+					<li>First fact about North America</li>
+					<li>Next fact about North America</li>
+				</ol>
+			</div>
+		</div>
+		<video id="sampleVideo" src="sample.mp4" controls></video>
+	</div>
+	
+	<br>
+	<div class="metadataContainer">
+		<div class="metadataHeading">Video Metadata</div>
+		<div class="metadataBody">
+			Current Time: <span id="currentTime">0</span><br>
+			Audio Tracks: <span id="audioTracks"></span><br>
+			Autoplay: <span id="autoplay"></span><br>
+			Controller: <span id="controller"></span><br>
+			Current Source: <span id="currentSource"></span><br>
+			Default Muted: <span id="defaultMuted"></span><br>
+			Default Playback Rate: <span id="defaultPlaybackRate"></span><br>
+			Duration: <span id="duration"></span><br>
+			Error: <span id="videoError"></span><br>
+			Loop: <span id="loop"></span><br>
+			Media Group: <span id="mediaGroup"></span><br>
+			Muted: <span id="muted"></span><br>
+			Network State: <span id="networkState"></span><br>
+			Playback Rate: <span id="playbackRate"></span><br>
+			Preload: <span id="preload"></span><br>
+			Ready State: <span id="readyState"></span><br>
+			Source: <span id="source"></span><br>
+			Start Date: <span id="startDate"></span><br>
+			Volume: <span id="volume"></span><br><br>
+		</div>
+	</div>
+
+	<script>
+		var sampleVideo = document.getElementById("sampleVideo");
+		sampleVideo.ontimeupdate = function() { updateTimeDisplay() };
+		
+		document.getElementById("pageBody").onload = function() { bodyLoad() };
+		
+		var africaFirstTime = true;
+		var southAmericaFirstTime = true;
+		var northAmericaFirstTime = true;
+
+		function bodyLoad() {
+			console.log("bodyLoad");
+			document.getElementById("audioTracks").innerHTML = sampleVideo.audioTracks;
+			document.getElementById("autoplay").innerHTML = sampleVideo.autoplay;
+			document.getElementById("controller").innerHTML = sampleVideo.controller;
+			document.getElementById("currentSource").innerHTML = sampleVideo.currentSrc;
+			document.getElementById("defaultMuted").innerHTML = sampleVideo.defaultMuted;
+			document.getElementById("defaultPlaybackRate").innerHTML = sampleVideo.defaultPlaybackRate;
+			document.getElementById("duration").innerHTML = sampleVideo.duration;
+			document.getElementById("videoError").innerHTML = sampleVideo.videoError;
+			document.getElementById("loop").innerHTML = sampleVideo.loop;
+			document.getElementById("mediaGroup").innerHTML = sampleVideo.mediaGroup;
+			document.getElementById("muted").innerHTML = sampleVideo.muted;
+			document.getElementById("networkState").innerHTML = sampleVideo.networkState;
+			document.getElementById("playbackRate").innerHTML = sampleVideo.playbackRate;
+			document.getElementById("preload").innerHTML = sampleVideo.preload;
+			document.getElementById("readyState").innerHTML = sampleVideo.readyState;
+			document.getElementById("source").innerHTML = sampleVideo.src;
+			document.getElementById("startDate").innerHTML = sampleVideo.startDate;
+			document.getElementById("volume").innerHTML = sampleVideo.volume;
+		}
+		
+		function updateTimeDisplay() {
+			document.getElementById("currentTime").innerHTML = sampleVideo.currentTime;
+
+			if (sampleVideo.currentTime > 7 && sampleVideo.currentTime < 12) {
+				document.getElementById("africaHeading").style.display = "block";
+				if (africaFirstTime) {
+					sampleVideo.pause();
+					africaFirstTime = false;
+				}
+			} else {
+				document.getElementById("africaHeading").style.display = "none";
+			}
+			
+			if (sampleVideo.currentTime > 14 && sampleVideo.currentTime < 18) {
+				document.getElementById("southAmericaHeading").style.display = "block";
+				if (southAmericaFirstTime) {
+					sampleVideo.pause();
+					southAmericaFirstTime = false;
+				}
+			} else {
+				document.getElementById("southAmericaHeading").style.display = "none";
+			}
+			
+			if (sampleVideo.currentTime > 15 && sampleVideo.currentTime < 19) {
+				document.getElementById("northAmericaHeading").style.display = "block";
+				if (northAmericaFirstTime) {
+					sampleVideo.pause();
+					northAmericaFirstTime = false;
+				}
+			} else {
+				document.getElementById("northAmericaHeading").style.display = "none";
+			}
+		}
+	</script>
+</body>
+
+</html>
